@@ -1,9 +1,11 @@
 <script setup>
 import landingPage from './components/landingPage.vue';
+import FormInscription from './components/formInscription.vue';
 </script>
 
 <template>
 <landingPage/>
+<FormInscription/>
 </template>
 
 <style lang="scss">
