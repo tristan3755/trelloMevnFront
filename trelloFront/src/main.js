@@ -4,15 +4,11 @@ createApp(App).mount('#app')
 
 let button=document.querySelector('.buttonSignIn')
 let formSign=document.querySelector('.formSignUp')
-let toogleSignUp=false
+let cross=document.querySelector('.cross')
  button.addEventListener('click',()=>{
-    toogleSignUp=!toogleSignUp
-    console.log(toogleSignUp)
-    if(toogleSignUp==false){
-        formSign.style.display="none"
-    }else{
-        formSign.classList.add("formDropDown")
-    }
+    formSign.style.display="flex"
  })
-
+ cross.addEventListener('click',()=>{
+    formSign.style.display="none"
+ })
 console.log(button)
