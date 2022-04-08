@@ -1,14 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-createApp(App).mount('#app')
+import router from './routers'
+const app=createApp(App)
+app.use(router)
+app.mount('#app')
 
-let button=document.querySelector('.buttonSignIn')
-let formSign=document.querySelector('.formSignUp')
-let cross=document.querySelector('.cross')
- button.addEventListener('click',()=>{
-    formSign.style.display="flex"
- })
- cross.addEventListener('click',()=>{
-    formSign.style.display="none"
- })
-console.log(button)

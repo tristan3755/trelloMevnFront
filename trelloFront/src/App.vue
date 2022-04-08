@@ -1,17 +1,17 @@
 <script setup>
-import landingPage from './components/landingPage.vue';
-import FormInscription from './components/formInscription.vue';
 </script>
 
 <template>
-<landingPage/>
-<FormInscription/>
+<main>
+<router-view></router-view>
+</main>
 </template>
 
 <style lang="scss">
 body{
     padding: 0;
     margin: 0;
+    background-color:#020329;
 }
 *{
     box-sizing: border-box;

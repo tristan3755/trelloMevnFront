@@ -246,8 +246,8 @@
     </div>
     <header>
       <nav>
-        <a>log in </a>
-        <a class="buttonSignIn">Sign in</a>
+        <a href="http://localhost:3000/connexion">log in </a>
+        <a class="buttonSignIn" href="http://localhost:3000/inscription">Sign in</a>
       </nav>
     </header>
   </article>
@@ -379,6 +379,7 @@ function toggleColorChangeGreen() {
         font-family: "Roboto", sans-serif;
         text-transform: uppercase;
         font-size: 1.5rem;
+        text-decoration: none;
         &:nth-child(2) {
           border: 1px solid white;
           padding: 1rem;

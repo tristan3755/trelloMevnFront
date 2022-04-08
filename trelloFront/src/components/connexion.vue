@@ -24,23 +24,9 @@
     </a>
     <input type="email" name="username" required v-model="user" placeholder="votre mail qui servira d'identifiant" />
     <input type="password" name="passeword" required v-model="pass1" placeholder="votre mot de passe" />
-    <input type="password" required v-model="pass2" placeholder="confirmation de votre mot de passe" />
-    <button @click="submitInscription">Inscription</button>
-    <p
-      class="passwordok"
-      v-if="pass1 == pass2 && !!pass1 && !!pass2 && pass1.length >= 2"
-    >
-      password ok
-    </p>
-    <p class="passwordKo" v-if="pass1 !== pass2 || pass2 !== pass1">password Ko</p>
-    <p class="passwordKo" v-if="pass1.length < 2 || pass2.length < 2">
-      password too short
-    </p>
+    <button @click="submitInscription">Connexion</button>
       <p class="passwordKo" v-if="toggleInscriptionIssues==true">
-     problème d'inscription
-    </p>
-      <p class="passwordok" v-if="toggleInscriptionIssues==false">
-     inscritpion validée
+     problème de connexion
     </p>
   </form>
 </template>
@@ -49,20 +35,18 @@
 import { ref } from "vue";
 let user =ref("")
 let pass1 = ref("");
-let pass2 = ref("");
 let toggleInscriptionIssues = ref(null);
-let urlInscription="http://localhost:4000/users/inscription"
+let urlConnexion="http://localhost:4000/users/connexion"
 
 function submitInscription(){
-fetch(urlInscription,{method:'POST',headers:{"Content-Type": "application/json; charset=UTF-8",},body:JSON.stringify({username:user.value,password:pass1.value})})
+fetch(urlConnexion,{method:'POST',headers:{"Content-Type": "application/json; charset=UTF-8",},body:JSON.stringify({username:user.value,password:pass1.value})})
 .then(res=>res.json())
 .then(res=>{
   console.log(res.code)
-  if(res.code==500){
+  if(res.code==401){
   toggleInscriptionIssues.value=true
   }else{
   toggleInscriptionIssues.value=false
- location = "http://localhost:3000/connexion"
   }
 })
 .catch(err=>{
@@ -71,7 +55,6 @@ fetch(urlInscription,{method:'POST',headers:{"Content-Type": "application/json; 
 }
 
 </script>
-
 <style lang="scss" scoped>
 .formSignUp {
   width: 100%;
@@ -116,18 +99,7 @@ transform: translate(0vw);
     border-radius: 5px;
     color: white;
   }
-  .passwordok {
-    color: white;
-    width: 250px;
-    padding: 2rem;
-    background-color: #27ae60;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-  }
-  .passwordKo {
+    .passwordKo {
     color: white;
     width: 250px;
     padding: 2rem;
