@@ -11,7 +11,7 @@
 body{
     padding: 0;
     margin: 0;
-    background-color:#020329;
+    background-color:black;
 }
 *{
     box-sizing: border-box;

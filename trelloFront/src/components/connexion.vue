@@ -37,16 +37,20 @@ let user =ref("")
 let pass1 = ref("");
 let toggleInscriptionIssues = ref(null);
 let urlConnexion="http://localhost:4000/users/connexion"
+let token 
+let userId
 
 function submitInscription(){
 fetch(urlConnexion,{method:'POST',headers:{"Content-Type": "application/json; charset=UTF-8",},body:JSON.stringify({username:user.value,password:pass1.value})})
 .then(res=>res.json())
 .then(res=>{
-  console.log(res.code)
+    (token = res.token), (userId = res.userId);
+  console.log(res.code,res.token,res.userId)
   if(res.code==401){
   toggleInscriptionIssues.value=true
   }else{
   toggleInscriptionIssues.value=false
+  location="http://localhost:3000/"
   }
 })
 .catch(err=>{
@@ -64,7 +68,7 @@ fetch(urlConnexion,{method:'POST',headers:{"Content-Type": "application/json; ch
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background-color:#020329;
+  background-color:black;
   animation: fade-in linear forwards 0.5s;
   @keyframes fade-in{
 from{

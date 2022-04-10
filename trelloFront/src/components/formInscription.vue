@@ -81,7 +81,7 @@ fetch(urlInscription,{method:'POST',headers:{"Content-Type": "application/json; 
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  background-color:#020329;
+  background-color:black;
   animation: fade-in linear forwards 0.5s;
   @keyframes fade-in{
 from{
