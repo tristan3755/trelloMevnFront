@@ -1,5 +1,5 @@
 <template>
-  <article class="page-Landing"></article>
+  <article class="page-Landing">
     <div class="logo">
       <canvas id="container3D"></canvas>
     </div>
