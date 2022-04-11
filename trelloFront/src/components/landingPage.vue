@@ -30,6 +30,7 @@ import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { CopyShader } from "three/examples/jsm/shaders/CopyShader.js";
 import { onMounted } from "vue";
+import gsap from "gsap"
 
 const gltfLoader = new GLTFLoader();
 
@@ -40,7 +41,6 @@ scene.add(light);
 onMounted(() => {
   const container3D = document.getElementById("container3D");
   const logo = document.querySelector(".logo");
-  const quotes=document.querySelector('.container-quotes')
   console.log(container3D, logo);
   let camera = new THREE.PerspectiveCamera(
     45,
@@ -120,6 +120,9 @@ onMounted(() => {
           mixer.clipAction(clip).play();
         });
         orbitObjet();
+        window.addEventListener('wheel',(e)=>{
+  gsap.to(objet.position,{duration:5,y:10})
+})
       }
 
       scene.add(objet);
@@ -179,10 +182,13 @@ onMounted(() => {
 });
 /*3D*/
 /*scroll*/
+function href(){
+location="http://localhost:3000/about"
+}
 window.addEventListener('wheel',(e)=>{
 console.log(e.deltaY)
-if(e.deltaY>100){
-  location="http://localhost:3000/about"
+if(e.deltaY>1){
+  setTimeout(href,1000)      
 }
 })
 
