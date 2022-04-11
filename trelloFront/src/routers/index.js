@@ -15,6 +15,11 @@ import {createRouter,createWebHistory} from 'vue-router'
         name:'connexion',
         component:()=>import("../components/connexion.vue")
     },
+    {
+        path:'/about',
+        name:'description',
+        component:()=>import("../components/description.vue")
+    },
  ]
 
 export default createRouter({
