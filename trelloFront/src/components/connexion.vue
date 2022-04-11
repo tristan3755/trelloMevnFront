@@ -73,7 +73,9 @@ fetch(urlConnexion,{method:'POST',headers:{"Content-Type": "application/json; ch
   @keyframes fade-in{
 from{
 transform: translate(-20vw);
+opacity: 0;
 }to{
+  opacity: 1;
 transform: translate(0vw);
 }
   }
