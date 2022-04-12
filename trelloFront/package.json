@@ -8,12 +8,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@glidejs/glide": "^3.5.2",
     "gsap": "^3.10.2",
     "three": "^0.139.2",
     "vue": "^3.2.25",
     "vue-router": "^4.0.14"
   },
   "devDependencies": {
+    "@types/glidejs__glide": "^3.4.1",
     "@types/three": "^0.139.0",
     "@vitejs/plugin-vue": "^2.2.0",
     "sass": "^1.49.9",
