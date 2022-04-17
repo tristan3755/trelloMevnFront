@@ -40,8 +40,12 @@
     <p class="passwordKo" v-if="toggleInscriptionIssues == true">problème de connexion</p>
   </form>
   <article class="getAll" v-if="formConnect == true">
-    <div class="contener-post">
+    <div class="contener-post contener-tasks">
       <p class="title-contener">Tasks</p>
+      <div v-for="post in arrayPostit" class="post">
+      <p class="title-post">{{post.title}}</p>
+       <p class="text-post">{{post.text}}</p>
+      </div>
     </div>
     <div class="contener-post">
       <p class="title-contener">In progress</p>
@@ -183,7 +187,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref,onMounted } from "vue";
 let user = ref("");
 let pass1 = ref("");
 let toggleInscriptionIssues = ref(null);
@@ -196,7 +200,7 @@ let formConnect = ref(false);
 let formPostAdd = ref(false);
 let titlePost = ref("");
 let textPost = ref("");
-
+let arrayPostit=ref()
 function submitInscription() {
   fetch(urlConnexion, {
     method: "POST",
@@ -258,8 +262,8 @@ function getAll() {
   })
     .then((res) => res.json())
     .then((res) => {
-      console.log(res);
-      console.log(res.code);
+    arrayPostit.value=res
+      console.log(arrayPostit.value);
     })
     .catch((err) => {
       console.log(err);
@@ -270,6 +274,9 @@ function getAll() {
 function addPostForm() {
   formPostAdd.value = !formPostAdd.value;
 }
+/*draf and drop*/
+
+/*draf and drop*/
 </script>
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap");
@@ -359,6 +366,25 @@ function addPostForm() {
       font-size: 1.5rem;
       font-weight: 800;
       letter-spacing: 5px;
+    }
+    .post{
+      width: 90%;
+      height: auto;
+      background-color: #1a2127;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      margin: 2rem;
+      .title-post{
+        font-size: 1.5rem;
+      }
+       .text-post{
+        font-size: 1rem;
+        align-self: flex-start;
+        margin: 1rem;
+      }
     }
   }
 }
