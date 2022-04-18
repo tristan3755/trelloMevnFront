@@ -43,15 +43,137 @@
     <div class="contener-post contener-tasks">
       <p class="title-contener">Tasks</p>
       <div v-for="post in arrayPostit" class="post">
-      <p class="title-post">{{post.title}}</p>
-       <p class="text-post">{{post.text}}</p>
+        <div class="crossSup" v-if="post.status == '1'" @click="suppPost(post._id)">
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 793 793"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M23 23L770 770"
+              stroke="white"
+              stroke-width="45"
+              stroke-linecap="round"
+            />
+            <path
+              d="M770 23L23 770"
+              stroke="white"
+              stroke-width="45"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        <p class="title-post" v-if="post.status == '1'">{{ post.title }}</p>
+        <p class="text-post" v-if="post.status == '1'">{{ post.text }}</p>
+        <div>
+          <p
+            class="post-status"
+            v-if="post.status == '1'"
+            @click="modifPostStatus(post._id, 2)"
+          >
+            pass in In-progress
+          </p>
+          <p
+            class="post-status"
+            v-if="post.status == '1'"
+            @click="modifPostStatus(post._id, 3)"
+          >
+            pass in in Done
+          </p>
+        </div>
       </div>
     </div>
     <div class="contener-post">
       <p class="title-contener">In progress</p>
+      <div v-for="post in arrayPostit" class="post">
+        <div class="crossSup" v-if="post.status == '2'" @click="suppPost(post._id)">
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 793 793"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M23 23L770 770"
+              stroke="white"
+              stroke-width="45"
+              stroke-linecap="round"
+            />
+            <path
+              d="M770 23L23 770"
+              stroke="white"
+              stroke-width="45"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        <p class="title-post" v-if="post.status == '2'">{{ post.title }}</p>
+        <p class="text-post" v-if="post.status == '2'">{{ post.text }}</p>
+        <div>
+          <p
+            class="post-status"
+            v-if="post.status == '2'"
+            @click="modifPostStatus(post._id, 1)"
+          >
+            pass in Tasks
+          </p>
+          <p
+            class="post-status"
+            v-if="post.status == '2'"
+            @click="modifPostStatus(post._id, 3)"
+          >
+            pass in in Done
+          </p>
+        </div>
+      </div>
     </div>
     <div class="contener-post">
       <p class="title-contener">Done!</p>
+      <div v-for="post in arrayPostit" class="post">
+        <div class="crossSup" v-if="post.status == '3'" @click="suppPost(post._id)">
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 793 793"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M23 23L770 770"
+              stroke="white"
+              stroke-width="45"
+              stroke-linecap="round"
+            />
+            <path
+              d="M770 23L23 770"
+              stroke="white"
+              stroke-width="45"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+        <p class="title-post" v-if="post.status == '3'">{{ post.title }}</p>
+        <p class="text-post" v-if="post.status == '3'">{{ post.text }}</p>
+        <div>
+          <p
+            class="post-status"
+            v-if="post.status == '3'"
+            @click="modifPostStatus(post._id, 1)"
+          >
+            pass in Tasks
+          </p>
+          <p
+            class="post-status"
+            v-if="post.status == '3'"
+            @click="modifPostStatus(post._id, 2)"
+          >
+            pass in in Progress
+          </p>
+        </div>
+      </div>
     </div>
     <form class="addPost" v-if="formPostAdd == true" @submit.prevent>
       <input type="text" name="title" v-model="titlePost" required placeholder="title" />
@@ -62,6 +184,7 @@
         required
         placeholder="Text"
       ></textarea>
+      <input type="text" name="status" v-model="status" required />
       <input type="hidden" name="id_user" v-model="userId" required />
       <button @click="submitPost">add task</button>
     </form>
@@ -187,20 +310,24 @@
 </template>
 
 <script setup>
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 let user = ref("");
 let pass1 = ref("");
 let toggleInscriptionIssues = ref(null);
 let urlConnexion = "http://localhost:4000/users/connexion";
 let urlPost = "http://localhost:4000/post/add";
 let urlGet = "http://localhost:4000/post/find/";
+let urlSupp = "http://localhost:4000/post/supp/";
+let urlmodifStatut = "http://localhost:4000/post/status/";
 let token = ref("");
 let userId = ref("");
 let formConnect = ref(false);
 let formPostAdd = ref(false);
 let titlePost = ref("");
 let textPost = ref("");
-let arrayPostit=ref()
+let status = ref("1");
+let statusModifClick = ref("");
+let arrayPostit = ref();
 function submitInscription() {
   fetch(urlConnexion, {
     method: "POST",
@@ -234,6 +361,7 @@ function submitPost() {
     body: JSON.stringify({
       title: titlePost.value,
       text: textPost.value,
+      status: status.value,
       id_user: userId.value,
     }),
   })
@@ -262,7 +390,7 @@ function getAll() {
   })
     .then((res) => res.json())
     .then((res) => {
-    arrayPostit.value=res
+      arrayPostit.value = res;
       console.log(arrayPostit.value);
     })
     .catch((err) => {
@@ -274,9 +402,58 @@ function getAll() {
 function addPostForm() {
   formPostAdd.value = !formPostAdd.value;
 }
-/*draf and drop*/
+/*supp*/
+function suppPost(id) {
+  console.log(id);
+  fetch(urlSupp + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer" + " " + token.value,
+      "Content-Type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.code == 401) {
+        console.log(res, res.code);
+      } else {
+        getAll();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+/*supp*/
+/*modif statut*/
+function modifPostStatus(id, statusPostClick) {
+  console.log(statusModifClick);
+  console.log(id);
+  fetch(urlmodifStatut + id, {
+    method: "PUT",
+    headers: {
+      Authorization: "Bearer" + " " + token.value,
+      "Content-Type": "application/json; charset=UTF-8",
+    },
+    body: JSON.stringify({
+      status: statusPostClick,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.code == 401) {
+        console.log(res, res.code);
+      } else {
+        getAll();
+        statusModif.value = 0;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
 
-/*draf and drop*/
+/*modif statut*/
 </script>
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap");
@@ -367,8 +544,9 @@ function addPostForm() {
       font-weight: 800;
       letter-spacing: 5px;
     }
-    .post{
+    .post {
       width: 90%;
+      position: relative;
       height: auto;
       background-color: #1a2127;
       border-radius: 5px;
@@ -377,10 +555,21 @@ function addPostForm() {
       align-items: center;
       justify-content: space-evenly;
       margin: 2rem;
-      .title-post{
-        font-size: 1.5rem;
+      .crossSup {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 20px;
+        height: 20px;
+        &:hover {
+          cursor: pointer;
+        }
       }
-       .text-post{
+      .title-post {
+        font-size: 1.5rem;
+        margin: 2rem;
+      }
+      .text-post {
         font-size: 1rem;
         align-self: flex-start;
         margin: 1rem;
