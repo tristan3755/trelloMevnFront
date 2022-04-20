@@ -1,11 +1,21 @@
 <template>
   <article class="container container-img-parralax">
     <span class="scrollDown">
-  <svg class="arrow" width="70%" height="70%" viewBox="0 0 24 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.9393 38.0607C11.5251 38.6464 12.4749 38.6464 13.0607 38.0607L22.6066 28.5147C23.1924 27.9289 23.1924 26.9792 22.6066 26.3934C22.0208 25.8076 21.0711 25.8076 20.4853 26.3934L12 34.8787L3.51472 26.3934C2.92893 25.8076 1.97919 25.8076 1.3934 26.3934C0.807613 26.9792 0.807613 27.9289 1.3934 28.5147L10.9393 38.0607ZM10.5 6.55671e-08L10.5 37L13.5 37L13.5 -6.55671e-08L10.5 6.55671e-08Z" fill="white"/>
-</svg>
+      <svg
+        class="arrow"
+        width="70%"
+        height="70%"
+        viewBox="0 0 24 39"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10.9393 38.0607C11.5251 38.6464 12.4749 38.6464 13.0607 38.0607L22.6066 28.5147C23.1924 27.9289 23.1924 26.9792 22.6066 26.3934C22.0208 25.8076 21.0711 25.8076 20.4853 26.3934L12 34.8787L3.51472 26.3934C2.92893 25.8076 1.97919 25.8076 1.3934 26.3934C0.807613 26.9792 0.807613 27.9289 1.3934 28.5147L10.9393 38.0607ZM10.5 6.55671e-08L10.5 37L13.5 37L13.5 -6.55671e-08L10.5 6.55671e-08Z"
+          fill="white"
+        />
+      </svg>
     </span>
-</article>
+  </article>
 
   <article class="container container-quotes">
     <p>Organisez votre travail</p>
@@ -14,6 +24,15 @@
       neque. Reprehenderit aliquam fugit eos, iusto dignissimos libero magni expedita
       nobis aut nemo voluptas molestias, laboriosam, soluta distinctio facere.
     </p>
+  </article>
+
+  <article class="container container-img">
+  <div class="container-img"></div>
+   <div class="container-img"></div>
+  </article>
+
+    <article class="container">
+  
   </article>
 
   <article class="container container-slider">
@@ -386,36 +405,46 @@ onMounted(() => {
     transform: translateY(0vh);
   }
 }
-  .scrollDown{
-    width: 30px;
-    height: 80px;
-    border: 2px solid white;
-    border-radius: 15px;
-    position: absolute;
-    bottom: 8rem;
-    z-index: 2;
-    margin-right: 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-     .arrow{
-      animation: arrow linear infinite 1.5s;
-    }
-    transform: rotate(180deg);
+.scrollDown {
+  width: 30px;
+  height: 80px;
+  border: 2px solid white;
+  border-radius: 15px;
+  position: absolute;
+  bottom: 8rem;
+  z-index: 2;
+  margin-right: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  .arrow {
+    animation: arrow linear infinite 1.5s;
   }
-   @keyframes arrow{
-0%{
-transform: translateY(-10%);
-}50%{
-transform: translateY(30%);
+  transform: rotate(180deg);
 }
-100%{
-transform: translateY(-10%);
-}
+@keyframes arrow {
+  0% {
+    transform: translateY(-10%);
   }
-
+  50% {
+    transform: translateY(30%);
+  }
+  100% {
+    transform: translateY(-10%);
+  }
+}
+.container-img{
+  background-image: none;
+  height: auto;
+  width: 100%;
+  .container-img{
+    height: auto;
+    width: 80%;
+    @include center($direction: column, $justify: center)
+  }
+}
 </style>
