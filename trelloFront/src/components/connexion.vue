@@ -42,7 +42,7 @@
   <article class="getAll" v-if="formConnect == true">
     <div class="contener-post contener-tasks">
       <p class="title-contener">Tasks</p>
-      <div v-for="post in arrayPostit" class="post">
+      <div v-for="post in arrayPostit"  class="post">
         <div class="crossSup" v-if="post.status == '1'" @click="suppPost(post._id)">
           <svg
             width="100%"
@@ -67,20 +67,20 @@
         </div>
         <p class="title-post" v-if="post.status == '1'">{{ post.title }}</p>
         <p class="text-post" v-if="post.status == '1'">{{ post.text }}</p>
-        <div>
+        <div class="progress-button" v-if="post.status == '1'">
           <p
             class="post-status"
             v-if="post.status == '1'"
             @click="modifPostStatus(post._id, 2)"
           >
-            pass in In-progress
+           In Progress
           </p>
           <p
             class="post-status"
             v-if="post.status == '1'"
             @click="modifPostStatus(post._id, 3)"
           >
-            pass in in Done
+         In Done
           </p>
         </div>
       </div>
@@ -112,20 +112,20 @@
         </div>
         <p class="title-post" v-if="post.status == '2'">{{ post.title }}</p>
         <p class="text-post" v-if="post.status == '2'">{{ post.text }}</p>
-        <div>
+        <div class="progress-button">
           <p
             class="post-status"
             v-if="post.status == '2'"
             @click="modifPostStatus(post._id, 1)"
           >
-            pass in Tasks
+           in Tasks
           </p>
           <p
             class="post-status"
             v-if="post.status == '2'"
             @click="modifPostStatus(post._id, 3)"
           >
-            pass in in Done
+           Done
           </p>
         </div>
       </div>
@@ -157,20 +157,20 @@
         </div>
         <p class="title-post" v-if="post.status == '3'">{{ post.title }}</p>
         <p class="text-post" v-if="post.status == '3'">{{ post.text }}</p>
-        <div>
+        <div class="progress-button">
           <p
             class="post-status"
             v-if="post.status == '3'"
             @click="modifPostStatus(post._id, 1)"
           >
-            pass in Tasks
+             In Tasks
           </p>
           <p
             class="post-status"
             v-if="post.status == '3'"
             @click="modifPostStatus(post._id, 2)"
           >
-            pass in in Progress
+            In progress
           </p>
         </div>
       </div>
@@ -184,10 +184,11 @@
         required
         placeholder="Text"
       ></textarea>
-      <input type="text" name="status" v-model="status" required />
+      <input type="hidden" name="status" v-model="status" required />
       <input type="hidden" name="id_user" v-model="userId" required />
       <button @click="submitPost">add task</button>
     </form>
+    <div class="timer" v-if="timerBloc==true"></div>
   </article>
   <article class="dashboard" v-if="formConnect == true">
     <div class="button">
@@ -306,11 +307,26 @@
         </defs>
       </svg>
     </div>
+    <div class="button" @click="timerBool()">
+    <svg width="100%" height="100%" viewBox="0 0 111 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.5898 8.5625V37H13.8789V8.5625H17.5898ZM26.7305 8.5625V11.6484H4.75781V8.5625H26.7305ZM34.3281 15.8672V37H30.6953V15.8672H34.3281ZM30.4219 10.2617C30.4219 9.67578 30.5977 9.18099 30.9492 8.77734C31.3138 8.3737 31.8477 8.17188 32.5508 8.17188C33.2409 8.17188 33.7682 8.3737 34.1328 8.77734C34.5104 9.18099 34.6992 9.67578 34.6992 10.2617C34.6992 10.8216 34.5104 11.3034 34.1328 11.707C33.7682 12.0977 33.2409 12.293 32.5508 12.293C31.8477 12.293 31.3138 12.0977 30.9492 11.707C30.5977 11.3034 30.4219 10.8216 30.4219 10.2617ZM43.7227 20.0664V37H40.0898V15.8672H43.5273L43.7227 20.0664ZM42.9805 25.6328L41.3008 25.5742C41.3138 24.1289 41.5026 22.7943 41.8672 21.5703C42.2318 20.3333 42.7721 19.2591 43.4883 18.3477C44.2044 17.4362 45.0964 16.7331 46.1641 16.2383C47.2318 15.7305 48.4688 15.4766 49.875 15.4766C50.8646 15.4766 51.776 15.6198 52.6094 15.9062C53.4427 16.1797 54.1654 16.6159 54.7773 17.2148C55.3893 17.8138 55.8646 18.582 56.2031 19.5195C56.5417 20.457 56.7109 21.5898 56.7109 22.918V37H53.0977V23.0938C53.0977 21.987 52.9089 21.1016 52.5312 20.4375C52.1667 19.7734 51.6458 19.2917 50.9688 18.9922C50.2917 18.6797 49.4974 18.5234 48.5859 18.5234C47.5182 18.5234 46.6263 18.7122 45.9102 19.0898C45.194 19.4674 44.6211 19.9883 44.1914 20.6523C43.7617 21.3164 43.4492 22.0781 43.2539 22.9375C43.0716 23.7839 42.9805 24.6823 42.9805 25.6328ZM56.6719 23.6406L54.25 24.3828C54.263 23.224 54.4518 22.1107 54.8164 21.043C55.194 19.9753 55.7344 19.0247 56.4375 18.1914C57.1536 17.3581 58.0326 16.7005 59.0742 16.2188C60.1159 15.724 61.3073 15.4766 62.6484 15.4766C63.7812 15.4766 64.7839 15.6263 65.6562 15.9258C66.5417 16.2253 67.2839 16.6875 67.8828 17.3125C68.4948 17.9245 68.957 18.7122 69.2695 19.6758C69.582 20.6393 69.7383 21.7852 69.7383 23.1133V37H66.1055V23.0742C66.1055 21.8893 65.9167 20.9714 65.5391 20.3203C65.1745 19.6562 64.6536 19.194 63.9766 18.9336C63.3125 18.6602 62.5182 18.5234 61.5938 18.5234C60.7995 18.5234 60.0964 18.6602 59.4844 18.9336C58.8724 19.207 58.3581 19.5846 57.9414 20.0664C57.5247 20.5352 57.2057 21.0755 56.9844 21.6875C56.776 22.2995 56.6719 22.9505 56.6719 23.6406ZM83.9766 37.3906C82.5052 37.3906 81.1706 37.1432 79.9727 36.6484C78.7878 36.1406 77.7656 35.431 76.9062 34.5195C76.0599 33.6081 75.4089 32.5273 74.9531 31.2773C74.4974 30.0273 74.2695 28.6602 74.2695 27.1758V26.3555C74.2695 24.6367 74.5234 23.1068 75.0312 21.7656C75.5391 20.4115 76.2292 19.2656 77.1016 18.3281C77.974 17.3906 78.9635 16.681 80.0703 16.1992C81.1771 15.7174 82.3229 15.4766 83.5078 15.4766C85.0182 15.4766 86.3203 15.737 87.4141 16.2578C88.5208 16.7786 89.4258 17.5078 90.1289 18.4453C90.832 19.3698 91.3529 20.4635 91.6914 21.7266C92.0299 22.9766 92.1992 24.3438 92.1992 25.8281V27.4492H76.418V24.5H88.5859V24.2266C88.5339 23.2891 88.3385 22.3776 88 21.4922C87.6745 20.6068 87.1536 19.8776 86.4375 19.3047C85.7214 18.7318 84.7448 18.4453 83.5078 18.4453C82.6875 18.4453 81.9323 18.6211 81.2422 18.9727C80.5521 19.3112 79.9596 19.819 79.4648 20.4961C78.9701 21.1732 78.5859 22 78.3125 22.9766C78.0391 23.9531 77.9023 25.0794 77.9023 26.3555V27.1758C77.9023 28.1784 78.0391 29.1224 78.3125 30.0078C78.599 30.8802 79.0091 31.6484 79.543 32.3125C80.0898 32.9766 80.7474 33.4974 81.5156 33.875C82.2969 34.2526 83.1823 34.4414 84.1719 34.4414C85.4479 34.4414 86.5286 34.181 87.4141 33.6602C88.2995 33.1393 89.0742 32.4427 89.7383 31.5703L91.9258 33.3086C91.4701 33.9987 90.8906 34.6562 90.1875 35.2812C89.4844 35.9062 88.6185 36.4141 87.5898 36.8047C86.5742 37.1953 85.3698 37.3906 83.9766 37.3906ZM100.031 19.1875V37H96.418V15.8672H99.9336L100.031 19.1875ZM106.633 15.75L106.613 19.1094C106.314 19.0443 106.027 19.0052 105.754 18.9922C105.493 18.9661 105.194 18.9531 104.855 18.9531C104.022 18.9531 103.286 19.0833 102.648 19.3438C102.01 19.6042 101.47 19.9688 101.027 20.4375C100.585 20.9062 100.233 21.4661 99.9727 22.1172C99.7253 22.7552 99.5625 23.4583 99.4844 24.2266L98.4688 24.8125C98.4688 23.5365 98.5924 22.3385 98.8398 21.2188C99.1003 20.099 99.4974 19.1094 100.031 18.25C100.565 17.3776 101.242 16.7005 102.062 16.2188C102.896 15.724 103.885 15.4766 105.031 15.4766C105.292 15.4766 105.591 15.5091 105.93 15.5742C106.268 15.6263 106.503 15.6849 106.633 15.75Z" fill="#0FBCF9"/>
+<g filter="url(#filter0_f_749_3)">
+<path d="M17.5898 8.5625V37H13.8789V8.5625H17.5898ZM26.7305 8.5625V11.6484H4.75781V8.5625H26.7305ZM34.3281 15.8672V37H30.6953V15.8672H34.3281ZM30.4219 10.2617C30.4219 9.67578 30.5977 9.18099 30.9492 8.77734C31.3138 8.3737 31.8477 8.17188 32.5508 8.17188C33.2409 8.17188 33.7682 8.3737 34.1328 8.77734C34.5104 9.18099 34.6992 9.67578 34.6992 10.2617C34.6992 10.8216 34.5104 11.3034 34.1328 11.707C33.7682 12.0977 33.2409 12.293 32.5508 12.293C31.8477 12.293 31.3138 12.0977 30.9492 11.707C30.5977 11.3034 30.4219 10.8216 30.4219 10.2617ZM43.7227 20.0664V37H40.0898V15.8672H43.5273L43.7227 20.0664ZM42.9805 25.6328L41.3008 25.5742C41.3138 24.1289 41.5026 22.7943 41.8672 21.5703C42.2318 20.3333 42.7721 19.2591 43.4883 18.3477C44.2044 17.4362 45.0964 16.7331 46.1641 16.2383C47.2318 15.7305 48.4688 15.4766 49.875 15.4766C50.8646 15.4766 51.776 15.6198 52.6094 15.9062C53.4427 16.1797 54.1654 16.6159 54.7773 17.2148C55.3893 17.8138 55.8646 18.582 56.2031 19.5195C56.5417 20.457 56.7109 21.5898 56.7109 22.918V37H53.0977V23.0938C53.0977 21.987 52.9089 21.1016 52.5312 20.4375C52.1667 19.7734 51.6458 19.2917 50.9688 18.9922C50.2917 18.6797 49.4974 18.5234 48.5859 18.5234C47.5182 18.5234 46.6263 18.7122 45.9102 19.0898C45.194 19.4674 44.6211 19.9883 44.1914 20.6523C43.7617 21.3164 43.4492 22.0781 43.2539 22.9375C43.0716 23.7839 42.9805 24.6823 42.9805 25.6328ZM56.6719 23.6406L54.25 24.3828C54.263 23.224 54.4518 22.1107 54.8164 21.043C55.194 19.9753 55.7344 19.0247 56.4375 18.1914C57.1536 17.3581 58.0326 16.7005 59.0742 16.2188C60.1159 15.724 61.3073 15.4766 62.6484 15.4766C63.7812 15.4766 64.7839 15.6263 65.6562 15.9258C66.5417 16.2253 67.2839 16.6875 67.8828 17.3125C68.4948 17.9245 68.957 18.7122 69.2695 19.6758C69.582 20.6393 69.7383 21.7852 69.7383 23.1133V37H66.1055V23.0742C66.1055 21.8893 65.9167 20.9714 65.5391 20.3203C65.1745 19.6562 64.6536 19.194 63.9766 18.9336C63.3125 18.6602 62.5182 18.5234 61.5938 18.5234C60.7995 18.5234 60.0964 18.6602 59.4844 18.9336C58.8724 19.207 58.3581 19.5846 57.9414 20.0664C57.5247 20.5352 57.2057 21.0755 56.9844 21.6875C56.776 22.2995 56.6719 22.9505 56.6719 23.6406ZM83.9766 37.3906C82.5052 37.3906 81.1706 37.1432 79.9727 36.6484C78.7878 36.1406 77.7656 35.431 76.9062 34.5195C76.0599 33.6081 75.4089 32.5273 74.9531 31.2773C74.4974 30.0273 74.2695 28.6602 74.2695 27.1758V26.3555C74.2695 24.6367 74.5234 23.1068 75.0312 21.7656C75.5391 20.4115 76.2292 19.2656 77.1016 18.3281C77.974 17.3906 78.9635 16.681 80.0703 16.1992C81.1771 15.7174 82.3229 15.4766 83.5078 15.4766C85.0182 15.4766 86.3203 15.737 87.4141 16.2578C88.5208 16.7786 89.4258 17.5078 90.1289 18.4453C90.832 19.3698 91.3529 20.4635 91.6914 21.7266C92.0299 22.9766 92.1992 24.3438 92.1992 25.8281V27.4492H76.418V24.5H88.5859V24.2266C88.5339 23.2891 88.3385 22.3776 88 21.4922C87.6745 20.6068 87.1536 19.8776 86.4375 19.3047C85.7214 18.7318 84.7448 18.4453 83.5078 18.4453C82.6875 18.4453 81.9323 18.6211 81.2422 18.9727C80.5521 19.3112 79.9596 19.819 79.4648 20.4961C78.9701 21.1732 78.5859 22 78.3125 22.9766C78.0391 23.9531 77.9023 25.0794 77.9023 26.3555V27.1758C77.9023 28.1784 78.0391 29.1224 78.3125 30.0078C78.599 30.8802 79.0091 31.6484 79.543 32.3125C80.0898 32.9766 80.7474 33.4974 81.5156 33.875C82.2969 34.2526 83.1823 34.4414 84.1719 34.4414C85.4479 34.4414 86.5286 34.181 87.4141 33.6602C88.2995 33.1393 89.0742 32.4427 89.7383 31.5703L91.9258 33.3086C91.4701 33.9987 90.8906 34.6562 90.1875 35.2812C89.4844 35.9062 88.6185 36.4141 87.5898 36.8047C86.5742 37.1953 85.3698 37.3906 83.9766 37.3906ZM100.031 19.1875V37H96.418V15.8672H99.9336L100.031 19.1875ZM106.633 15.75L106.613 19.1094C106.314 19.0443 106.027 19.0052 105.754 18.9922C105.493 18.9661 105.194 18.9531 104.855 18.9531C104.022 18.9531 103.286 19.0833 102.648 19.3438C102.01 19.6042 101.47 19.9688 101.027 20.4375C100.585 20.9062 100.233 21.4661 99.9727 22.1172C99.7253 22.7552 99.5625 23.4583 99.4844 24.2266L98.4688 24.8125C98.4688 23.5365 98.5924 22.3385 98.8398 21.2188C99.1003 20.099 99.4974 19.1094 100.031 18.25C100.565 17.3776 101.242 16.7005 102.062 16.2188C102.896 15.724 103.885 15.4766 105.031 15.4766C105.292 15.4766 105.591 15.5091 105.93 15.5742C106.268 15.6263 106.503 15.6849 106.633 15.75Z" fill="#0FBCF9"/>
+</g>
+<defs>
+<filter id="filter0_f_749_3" x="0.757812" y="4.17188" width="109.875" height="37.2188" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_749_3"/>
+</filter>
+</defs>
+</svg>
+</div>
   </article>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 let user = ref("");
 let pass1 = ref("");
 let toggleInscriptionIssues = ref(null);
@@ -323,6 +339,7 @@ let token = ref("");
 let userId = ref("");
 let formConnect = ref(false);
 let formPostAdd = ref(false);
+let timerBloc=ref(false)
 let titlePost = ref("");
 let textPost = ref("");
 let status = ref("1");
@@ -372,6 +389,7 @@ function submitPost() {
         console.log(res.code);
       } else {
         getAll();
+        formPostAdd.value=false
       }
     })
     .catch((err) => {
@@ -445,7 +463,6 @@ function modifPostStatus(id, statusPostClick) {
         console.log(res, res.code);
       } else {
         getAll();
-        statusModif.value = 0;
       }
     })
     .catch((error) => {
@@ -454,6 +471,11 @@ function modifPostStatus(id, statusPostClick) {
 }
 
 /*modif statut*/
+/*timer bloc*/
+function timerBool(){
+timerBloc.value=!timerBloc.value
+}
+
 </script>
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap");
@@ -518,7 +540,7 @@ function modifPostStatus(id, statusPostClick) {
 .getAll {
   width: 100%;
   min-height: 100vh;
-  background-color: #1e272e;
+  background-color: #171821;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -532,8 +554,7 @@ function modifPostStatus(id, statusPostClick) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #0fbcf9;
-    border: 2px solid #0fbcf9;
+    background-color: #171821;
     &.contener-post:nth-child(1) {
       margin-left: 10rem;
     }
@@ -548,22 +569,26 @@ function modifPostStatus(id, statusPostClick) {
       width: 90%;
       position: relative;
       height: auto;
-      background-color: #1a2127;
+      background-color: #13151B;
       border-radius: 5px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-evenly;
       margin: 2rem;
+      border: solid 1px #0fbcf9;
+      border-radius: 5px;
       .crossSup {
         position: absolute;
         top: 0.5rem;
         right: 0.5rem;
         width: 20px;
         height: 20px;
-        &:hover {
-          cursor: pointer;
-        }
+       transition: ease-in-out 0.5s;
+&:hover{
+  cursor: pointer;
+  transform: scale(1.1);
+}
       }
       .title-post {
         font-size: 1.5rem;
@@ -581,12 +606,10 @@ function modifPostStatus(id, statusPostClick) {
   width: 10vw;
   min-height: 100vh;
   border: 2px solid;
-  border-top-color: #0fbcf9;
   border-right-color: #0fbcf9;
-  border-bottom-color: #0fbcf9;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  background-color: #1e272e;
+  background-color: #13151B;
   position: fixed;
   left: 0;
   top: 0;
@@ -599,12 +622,14 @@ function modifPostStatus(id, statusPostClick) {
     width: 5vw;
     height: 5vw;
     border-radius: 50%;
-    background: #1e272e;
-    box-shadow: 20px 20px 17px #1d252c, -20px -20px 17px #1f2930;
+   background: linear-gradient(145deg, #14161d, #111318);
+box-shadow:  20px 20px 38px #0c0e12,
+             -20px -20px 38px #1a1c24;
     &:hover {
       cursor: pointer;
-      background: #1e272e;
-      box-shadow: inset 20px 20px 60px #1a2127, inset -20px -20px 60px #232d35;
+ background: #13151B;
+box-shadow: inset 20px 20px 38px #0c0e12,
+            inset -20px -20px 38px #1a1c24;
     }
   }
 }
@@ -612,7 +637,7 @@ function modifPostStatus(id, statusPostClick) {
   position: fixed;
   width: 100%;
   min-height: 100vh;
-  background-color: #1e272e;
+   background-color: #171821;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -648,5 +673,30 @@ function modifPostStatus(id, statusPostClick) {
     border-radius: 5px;
     color: white;
   }
+}
+.progress-button{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+.post-status{
+  border: solid 1px #0fbcf9;
+  border-radius: 5px;
+padding: 1rem;
+transition: ease-in-out 0.5s;
+&:hover{
+  cursor: pointer;
+  transform: scale(1.1);
+}
+}
+}
+.timer{
+  min-height: 100vh;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 </style>
